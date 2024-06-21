@@ -1,0 +1,64 @@
+/* ChatGPT-inspired color scheme */
+
+/* Primary color */
+:root {
+    --primary-color: #4e75e3;
+}
+
+/* Secondary color */
+:root {
+    --secondary-color: #68e3c9;
+}
+
+/* Background color */
+body {
+    background-color: #f5f5f5;
+}
+
+/* Form container */
+#name-form {
+    background-color: var(--primary-color);
+}
+
+/* Input fields */
+.input-group {
+    margin-bottom: 1rem;
+}
+
+/* Chat room container */
+#chat-room {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+/* Message container */
+#message-container-table {
+    width: 100%;
+}
+
+/* Message rows */
+#message-container-table tr td {
+    padding: 0.5rem;
+}
+
+/* "This is room working" text */
+.text-center {
+    margin-top: 2rem;
+}
+
+/* Button styles */
+.btn {
+    background-color: var(--secondary-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #3e5bd8;
+}
