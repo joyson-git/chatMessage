@@ -11,3 +11,6 @@ public class RealmessageApplication {
 	}
 
 }
+///http://localhost:2000
+
+//to run the programm
