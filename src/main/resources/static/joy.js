@@ -1,49 +1,27 @@
-var stompClient = null;
-
-function sendMessage() {
-    let jsonOb = {
-        name: localStorage.getItem("name"),
-        content: $("#message-value").val()
-    };
-    stompClient.send("/app/message", {}, JSON.stringify(jsonOb));
-}
+let stompClient = null;
 
 function connect() {
-    let socket = new SockJS("/server1");
+    const socket = new SockJS('/server1');
     stompClient = Stomp.over(socket);
-    stompClient.connect({}, function(frame) {
-        console.log("Connected: " + frame);
-        $("#name-form").addClass("d-none");
-        $("#chat-room").removeClass("d-none");
-        stompClient.subscribe("/topic/return-to", function(response) {
-            showMessage(JSON.parse(response.body));
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/return-to', function (message) {
+            showMessage(JSON.parse(message.body));
         });
     });
 }
 
-function showMessage(message) {
-    $("#message-container-table").prepend(`<tr><td><b>${message.name}:</b>${message.content}</td></tr>`);
+function sendMessage() {
+    const name = document.getElementById('name').value;
+    const content = document.getElementById('content').value;
+    stompClient.send("/app/message", {}, JSON.stringify({'name': name, 'content': content}));
 }
 
-$(document).ready(() => {
-    $("#login").click(() => {
-        let name = $("#name-value").val();
-        localStorage.setItem("name", name);
-        $("#name-title").html(`Welcome, <b>${name}</b>`);
-        connect();
-    });
+function showMessage(message) {
+    const messages = document.getElementById('messages');
+    const messageElement = document.createElement('div');
+    messageElement.textContent = message.name + ": " + message.content;
+    messages.appendChild(messageElement);
+}
 
-    $("#send-btn").click(() => {
-        sendMessage();
-    });
-
-    $("#logout-btn").click(() => {
-        localStorage.removeItem("name");
-        if (stompClient != null) {
-            stompClient.disconnect();
-            $("#name-form").removeClass("d-none");
-            $("#chat-room").addClass("d-none");
-            console.log(stompClient);
-        }
-    });
-});
+connect();
